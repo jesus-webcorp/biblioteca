@@ -1,4 +1,6 @@
-<?php namespace Config;
+<?php
+
+namespace Config;
 
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
@@ -16,13 +18,13 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Crud');
+$routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
 
-/**
+/*
  * --------------------------------------------------------------------
  * Route Definitions
  * --------------------------------------------------------------------
@@ -30,12 +32,9 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Crud::index');
-$routes->get('/obtenerNombre/(:any)', 'Crud::obtenerNombre/$1');
-$routes->get('/eliminar/(:any)', 'Crud::eliminar/$1');
-$routes->post('/crear', 'Crud::crear');
-$routes->post('/actualizar', 'Crud::actualizar');
-/**
+$routes->get('/', 'Home::index');
+
+/*
  * --------------------------------------------------------------------
  * Additional Routing
  * --------------------------------------------------------------------
@@ -52,3 +51,9 @@ if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
 {
 	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
+$routes->get('listar', 'Libros::index');
+$routes->get('crear', 'Libros::crear');
+$routes->post('guardar', 'Libros::guardar');
+$routes->get('borrar/(:num)', 'Libros::borrar/$1');
+$routes->get('editar/(:num)', 'Libros::editar/$1');
+$routes->post('actualizar', 'Libros::actualizar');
