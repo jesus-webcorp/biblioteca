@@ -8,7 +8,7 @@ https://www.youtube.com/watch?v=yr699_OD3-g&ab_channel=Develoteca
 =====================================Base de datos===================================
 + Crear en phpmyadmin una base con el nombre bibliotecacodeigniter4 con una tabla llamada libros
 
-+ Models->Libro.php
+ Models->Libro.php
 
 
 =========================Instrucciones o pasos a seguir==================
