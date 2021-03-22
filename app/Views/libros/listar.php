@@ -4,8 +4,8 @@
             <thead class="thead-light">
                 <tr>
                     <th>#</th>
-                    <th>Imagen</th>
                     <th>Nombre</th>
+                    <th>Imagen</th>                    
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -15,13 +15,13 @@
             <!--Imprimo la informacion-->
                 <tr>
                     <td><?= $libro['id']; ?></td>
+                    <td><?= $libro['nombre']; ?></td>
                     <!--Mostrar la imagen del libro-->
                     <td>
                         <img class="img-thumbnail"
                         src="<?=base_url()?>/uploads/<?=$libro['imagen'];?>" 
                         width="100" alt="">                    
                     </td>
-                    <td><?= $libro['nombre']; ?></td>
                     
                     <td>
                         <a href="<?= base_url('editar/'.$libro['id']); ?>" class="btn btn-info" type="button">Editar</a>
