@@ -104,7 +104,7 @@ class Libros extends Controller{
         $libro->update($id, $datos);
 
         $validacion = $this->validate([
-            'imagen' =>[
+            'imagen' => [
                 'uploaded[imagen]',
                 'mime_in[imagen, image/jpg, image/jpeg, image/png]',
                 'max_size[imagen, 1024]',
@@ -113,12 +113,12 @@ class Libros extends Controller{
 
         if($validacion){
             if($imagen=$this->request->getFile('imagen')){
+                //Borro la imagen anterior que estaba con ese id
                 $datosLibro=$libro->where('id', $id)->first();//recupero la informacion
-
                 $ruta = ('../public/uploads/'.$datosLibro['imagen']);//armo la ruta donde esta esa imagen
                 unlink($ruta); //hago el borrado de la imagen vieja
 
-                //Actualizo con la imagen nueva
+                //Actualizo dicho id con la imagen nueva a poner
                 $nuevoNombre = $imagen->getRandomName();
                 $imagen->move('../public/uploads/', $nuevoNombre); //lugar donde se subiran las imagenes
 
