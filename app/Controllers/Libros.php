@@ -24,7 +24,19 @@ class Libros extends Controller{
     }
 
     public function guardar(){
-        $libro = new Libro();
+
+        var_dump($_POST);
+        $file = $this->request->getFile('imagen');  
+
+        if (! $file->isValid()){
+            throw new \RuntimeException($file->getErrorString().'('.$file->getError().')');
+        }else{
+            $name = $file->getName();
+            $file->move(WRITEPATH.'../public/uploads/', $name);
+            //$imagen->move('../public/uploads/', $name);
+        }
+
+        $libro = new Libro();/*
         //Validaciones
         $validacion = $this->validate([
             'nombre' => 'required|min_length[3]',
@@ -41,18 +53,16 @@ class Libros extends Controller{
 
             return redirect()->back()->withInput();
             //return $this->response->redirect(site_url('/listar'));
-        }
+        }*/
 
         //Adjuntar una imagen a la base de datos
-        if($imagen=$this->request->getFile('imagen')){
-            $nuevoNombre = $imagen->getRandomName();
-            $imagen->move('../public/uploads/', $nuevoNombre); //lugar donde se subiran las imagenes
+        
             $datos=[
                 'nombre'=>$this->request->getVar('nombre'),
-                'imagen'=>$nuevoNombre
+                'imagen'=>$name
             ];
             $libro->insert($datos);
-        }
+       
         //print_r($nombre);
         //echo "Ingresado a la BD";
         return $this->response->redirect(site_url('/listar'));//redireccionamos a la lista
@@ -84,14 +94,26 @@ class Libros extends Controller{
         return view('libros/editar', $datos);
     }
 
-    public function actualizar(){
+    public function actualizar(){        
         $libro = new Libro();
+
+        $file = $this->request->getFile('imagen');  
+
+        if (! $file->isValid()){
+            throw new \RuntimeException($file->getErrorString().'('.$file->getError().')');
+        }else{
+            $name = $file->getName();
+            $file->move(WRITEPATH.'../public/uploads/', $name);
+            //$imagen->move('../public/uploads/', $name);
+        }
+        
         $datos=[
-            'nombre'=>$this->request->getVar('nombre')            
+            'nombre'=>$this->request->getVar('nombre'),
+            'imagen'=>$name
         ];
         $id = $this->request->getVar('id');
 
-        $validacion = $this->validate([
+        /*$validacion = $this->validate([
             'nombre' => 'required|min_length[3]'           
         ]);
 
@@ -99,11 +121,11 @@ class Libros extends Controller{
             $session = session();
             $session->setFlashdata('mensaje', 'Revise la información');
             return redirect()->back()->withInput();
-        }
+        }*/
 
         $libro->update($id, $datos);
 
-        $validacion = $this->validate([
+        /*$validacion = $this->validate([
             'imagen' => [
                 'uploaded[imagen]',
                 'mime_in[imagen, image/jpg, image/jpeg, image/png]',
@@ -125,7 +147,7 @@ class Libros extends Controller{
                 $datos=['imagen'=>$nuevoNombre];
                 $libro->update($id, $datos);
             }
-        }
+        }*/
 
         return $this->response->redirect(site_url('/listar'));
     }
